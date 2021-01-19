@@ -1,5 +1,5 @@
 /* XPM */
-static char * cladder_xpm[] = {
+static const char * ladder_xpm[] = {
 "16 16 13 1",
 " 	c None",
 ".	c #FFA858",

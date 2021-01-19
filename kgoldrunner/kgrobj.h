@@ -1,18 +1,43 @@
-/*  _                   _     _   _     
- * | | ____ _ _ __ ___ | |__ (_) | |__  
- * | |/ / _` | '__/ _ \| '_ \| | | '_ \ 
+/***************************************************************************
+                          kgrobj.h  -  description
+                             -------------------
+    begin                : Wed Jan 23 2002
+    copyright            : (C) 2002 by Marco Krüger and Ian Wadham
+    email                : See menu "Help, About KGoldrunner"
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+/*  _                   _     _   _
+ * | | ____ _ _ __ ___ | |__ (_) | |__
+ * | |/ / _` | '__/ _ \| '_ \| | | '_ \
  * |   < (_| | | | (_) | |_) | |_| | | |
  * |_|\_\__, |_|  \___/|_.__// (_)_| |_|
- *      |___/ by grisu (99) |__/         
+ *      |___/ by grisu (99) |__/
  */
 
 #ifndef KGROBJ__H
 #define KGROBJ__H
 
+// Enable the next "#define" or use compiler option -DQT1 if you want to compile
+// with Qt Library v1.x and KDE v1.x desktop.  Otherwise, we will use Qt v2.x
+// and no particular desktop (thus moving towards independence of O/S).
+//
+// #define QT1
+
+#ifdef QT1
+#include <kiconloader.h>
+#endif
+
 #include <iostream.h>
 
-#include <kapp.h>
-#include <kiconloader.h>
 #include <qimage.h>
 #include <qlist.h>
 #include <qpainter.h>
@@ -46,10 +71,30 @@ const char FIELDHEIGHT    = 20;
 const char VERTIKAL     = 0;
 const char HORIZONTAL   = 1;
 
-const double DROPNUGGETDELAY = 500.0;
+/* Action times ... */
+#define	NSPEED		12
+#define	MAXSPEED	NSPEED * 2
+#define	MINSPEED	NSPEED / 4
+
+#define	BEGINSPEED	NSPEED / 2
+#define	NOVICESPEED	(3 * NSPEED) / 4
+#define	CHAMPSPEED	(3 * NSPEED) / 2
+
+typedef struct {
+    int hwalk;
+    int hfall;
+    int ewalk;
+    int efall;
+    int ecaptive;
+    int hole;
+} Timing;
+
 const int DIGDELAY = 200;
-const int HOLETIME = 40;
+
 const int STEP = 4;
+
+const double DROPNUGGETDELAY = 70.0;	// Enemy holds gold for avg. 12.5 cells.
+// const double DROPNUGGETDELAY = 500.0;// Old value --> avg. 94 cells.
 
 enum Position {RIGHTWALK1,RIGHTWALK2,RIGHTWALK3,RIGHTWALK4,
 	       LEFTWALK1,LEFTWALK2,LEFTWALK3,LEFTWALK4,
@@ -59,13 +104,22 @@ enum Position {RIGHTWALK1,RIGHTWALK2,RIGHTWALK3,RIGHTWALK4,
 	       FALL1,FALL2};
 enum Status {STANDING,FALLING,WALKING,CLIMBING,CAPTIVE};
 enum Direction {RIGHT,LEFT,UP,DOWN,STAND};
+enum SearchStrategy {LOW,MEDIUM,HIGH};
+
+class KGrFigure;
 
 class KGrObj : public QWidget
-{ 
+{
   Q_OBJECT
  public:
-  KGrObj(KIconLoader *loader=0, QWidget *parent=0, const char *name=0);
+  KGrObj (QWidget *parent=0, const char *name=0);
   virtual ~KGrObj();
+
+  // STATIC GLOBAL FLAGS.
+  static bool frozen;		// Game play halted (use ESCAPE key).
+  static bool bugFixed;		// Dynamic bug fix turned on (key B, if halted).
+  static bool logging;		// Log printing turned on.
+
   void drawFigure(QPixmap,int,int);
   void eraseFigure(int,int);
   void setx(int);
@@ -73,100 +127,144 @@ class KGrObj : public QWidget
   char whatIam();
   int searchValue;
   bool blocker; // Beton or Brick -> TRUE
+  void setMousePos ();
+  void showState (int, int);
+ signals:
+  void mouseClick (int);
+  void mouseLetGo (int);
  protected:
+  void mousePressEvent (QMouseEvent *);
+  void mouseReleaseEvent (QMouseEvent *);
   int xpos;
   int ypos;
   char iamA;
-  KIconLoader *loader;
-  QPainter painter;
+ private:
+  QCursor * m;
+};
+
+class KGrEditable : public KGrObj
+{
+  Q_OBJECT
+public:
+  KGrEditable (const QPixmap & pic, QWidget *parent=0, const char *name=0);
+  virtual ~KGrEditable ();
+  void setType (char, const QPixmap &);
+  void paintEvent (QPaintEvent *);
+private:
+  QPixmap bgPixmap;
 };
 
 class KGrFree : public KGrObj
 { Q_OBJECT
  public:
-  KGrFree(KIconLoader *loader=0, bool = true, QWidget *parent = 0, const char *name = 0);
+  KGrFree(const QPixmap & pic1, const QPixmap & pic2, bool = true,
+			QWidget *parent = 0, const char *name = 0);
   virtual ~KGrFree();
   void setNugget(bool);
+  void redrawFigure (KGrFigure *);
  protected:
   QPixmap freebg,nuggetbg;
+  char theRealMe;	// Set to FREE or HLADDER, even when "iamA == NUGGET".
+  KGrFigure * figure;
+  void paintEvent (QPaintEvent *);
 };
 
 class KGrPole : public KGrObj
 { Q_OBJECT
  public:
-  KGrPole(KIconLoader *loader=0, QWidget *parent = 0, const char *name = 0);
+  KGrPole(const QPixmap & pic, QWidget *parent = 0, const char *name = 0);
   virtual ~KGrPole();
 };
 
 class KGrStones : public KGrObj
 { Q_OBJECT
  public:
-  KGrStones(KIconLoader *loader=0, QWidget *parent = 0, const char *name = 0);
+  KGrStones(QWidget *parent = 0, const char *name = 0);
   virtual ~KGrStones();
 };
 
 class KGrBrick : public KGrStones
 { Q_OBJECT
  public:
-  KGrBrick(KIconLoader *loader=0, QWidget *parent = 0, const char *name = 0);
+  KGrBrick(const QPixmap * pic, QWidget *parent = 0, const char *name = 0);
   virtual ~KGrBrick();
   void dig(void);
   void useHole();
   void unUseHole();
+  static int speed;	// Digging & repair speed (copy of KGrFigure::speed).
+  static int HOLETIME;	// Number of timing cycles for a hole to remain open.
+  void doStep();
+  void showState (int, int);
  protected slots:
   void timeDone(void);
  private :
   int dig_counter;
-  QPixmap digpix[10];
+  int hole_counter;
+  const QPixmap *digpix;
+  bool holeFrozen;
   QTimer *timer;
 };
 
 class KGrBeton : public KGrStones
 { Q_OBJECT
  public:
-  KGrBeton(KIconLoader *loader=0, QWidget *parent = 0, const char *name = 0);
+  KGrBeton(const QPixmap & pic, QWidget *parent = 0, const char *name = 0);
   virtual ~KGrBeton();
 };
 
 class KGrFbrick : public KGrStones
 { Q_OBJECT
  public:
-  KGrFbrick(KIconLoader *loader=0, QWidget *parent = 0, const char *name = 0);
+  KGrFbrick(const QPixmap & pic, QWidget *parent = 0, const char *name = 0);
   virtual ~KGrFbrick();
 };
 
 class KGrLadder : public KGrObj
 { Q_OBJECT
  public:
-  KGrLadder(KIconLoader *loader=0, QWidget *parent = 0, const char *name = 0);
+  KGrLadder(const QPixmap & pic, QWidget *parent = 0, const char *name = 0);
   virtual ~KGrLadder();
 };
 
-class KGrHladder : public KGrLadder
+class KGrHladder : public KGrFree
 { Q_OBJECT
  public:
-  KGrHladder(KIconLoader *loader=0, QWidget *parent = 0, const char *name = 0);
+  // BUG FIX - Ian W., 21/6/01 - must inherit "setNugget()" from "KGrFree".
+  KGrHladder(const QPixmap & pic1, const QPixmap & pic2, const QPixmap & pic3,
+		bool nug = 0, QWidget *parent = 0, const char *name = 0);
   virtual ~KGrHladder();
   void showLadder();
  protected:
   QPixmap ladderbg;
 };
 
-/*  
- *      __ _                      
- *     / _(_) __ _ _   _ _ __ ___ 
+/*
+ *      __ _
+ *     / _(_) __ _ _   _ _ __ ___
  *    | |_| |/ _` | | | | '__/ _ \
  *    |  _| | (_| | |_| | | |  __/
  *    |_| |_|\__, |\__,_|_|  \___|
- *           |___/                
+ *           |___/
  */
 
 class KGrFigure : public QObject
-{  Q_OBJECT 
+{  Q_OBJECT
 
  public:
-  KGrFigure(KIconLoader *, int , int );
+  KGrFigure (int, int);
   virtual ~KGrFigure();
+
+  // STATIC GLOBAL FLAGS.
+  static bool variableTiming;		// More enemies imply less speed.
+  static bool alwaysCollectNugget;	// Enemies always collect nuggets.
+  static bool runThruHole;		// Enemy can run L/R through dug hole.
+  static bool reappearAtTop;		// Enemies are reborn at top of screen.
+  static SearchStrategy searchStrategy;	// Low, medium or high difficulty.
+
+  static Timing fixedTiming;		// Original set of 6 KGr timing values.
+
+  static Timing varTiming [6];		// Optional 6 sets of timing values,
+					// dependent on number of enemies.
   void incnuggetd();
   int getx();
   int gety();
@@ -175,26 +273,29 @@ class KGrFigure : public QObject
   void setPlayfield(KGrObj *(*p)[30][22]);
   void setx(int x);
   void sety(int y);
-  void showFigure(); //zeigt Figur  
+  void showFigure(); //zeigt Figur
   virtual void init(int,int);
+  void eraseOldFigure();
 
  protected:
+
+  // STATIC GLOBAL VARIABLES.
   static int herox;
   static int heroy;
+
+  static int speed;		// Adjustable game-speed factor.
+
   int x, y;
   int absx, absy;
-  int relx, rely; // Figur wird um relx,rely Pixel verschoben 
+  int relx, rely; // Figur wird um relx,rely Pixel verschoben
   int mem_x,mem_y,mem_relx,mem_rely;
   int walkCounter;
   int nuggets;
   int actualPixmap; // ArrayPos der zu zeichnenden Pixmap
-  int WALKDELAY;
-  int FALLDELAY;
   QTimer *walkTimer;
   QTimer *fallTimer;
 
   KGrObj *(*playfield)[30][22];
-  KIconLoader *loader;
   Status status;
   Direction direction;
   bool canWalkRight();
@@ -204,72 +305,104 @@ class KGrFigure : public QObject
   bool canStand();
   bool hangAtPole();
   virtual bool standOnEnemy()=0;
-  void walkUp();
-  void walkDown();
-  void walkRight();
-  void walkLeft();
-  void initFall(int);
-  void eraseOldFigure();
+  void walkUp(int);
+  void walkDown(int, int);
+  void walkRight(int, int);
+  void walkLeft(int, int);
+  void initFall(int, int);
+
+  bool walkFrozen;
+  bool fallFrozen;
 };
 
 class KGrEnemy : public KGrFigure
-{ Q_OBJECT 
+{ Q_OBJECT
 
  public:
-  KGrEnemy(KIconLoader *, int , int );
+  KGrEnemy (const QPixmap & pic1, const QPixmap & pic2, int , int);
   virtual ~KGrEnemy();
   void showFigure();
   void startSearching();
   void setEnemyList(QList<KGrEnemy> *);
   virtual void init(int,int);
+  static int WALKDELAY;
+  static int FALLDELAY;
+  static int CAPTIVEDELAY;
   int enemyId;
+  void doStep();
+  void showState (char);
  private:
   int birthX, birthY;
-  int CAPTIVEDELAY;
   int searchStatus;
   int captiveCounter;
-  bool heroOnMyHead;
   QTimer *captiveTimer;
   QPixmap enemyPm[2][20];
   bool canWalkUp();
   QList<KGrEnemy> *enemies;
   bool standOnEnemy();
-  bool isInside(int,int);
-  bool isInEnemy();
+  bool bumpingFriend();
 
+  void startWalk();
+  void dieAndReappear();
   Direction searchbestway(int,int,int,int);
-  Direction searchdownway(int,int,int,int);
-  Direction searchupway(int,int,int,int);
-  Direction searchleftway(int,int,int,int);
-  Direction searchrightway(int,int,int,int);
+  Direction searchdownway(int,int);
+  Direction searchupway(int,int);
+  Direction searchleftway(int,int);
+  Direction searchrightway(int,int);
+
+  Direction lowSearchUp(int,int,int);
+  Direction lowSearchDown(int,int,int);
+  Direction lowGetHero(int,int,int);
+
+  int  distanceUp (int, int, int);
+  int  distanceDown (int, int, int);
+  bool searchOK (int, int, int);
+  int  canWalkLR (int, int, int);
+  bool willNotFall (int, int);
+
   void collectNugget();
   void dropNugget();
+
+  bool captiveFrozen;
 
  public slots:
   void walkTimeDone();
   void fallTimeDone();
   void captiveTimeDone();
-  
+
  signals:
+  void lostNugget();
+  void trapped(int);
+  void killed(int);
 };
 
 class KGrHero : public KGrFigure
-{  Q_OBJECT 
+{  Q_OBJECT
 
  public:
-  KGrHero(KIconLoader *, int , int );
+  KGrHero(const QPixmap & pic, int , int);
   virtual ~KGrHero();
   bool started;
-  void showFigure(); 
+  void showFigure();
   void dig();
+  void digLeft();
+  void digRight();
   void startWalk();
   void setEnemyList(QList<KGrEnemy> *);
   void init(int,int);
   void setKey(Direction);
+  void setDirection(int, int);
   void start();
+  void loseNugget();
+  static int WALKDELAY;
+  static int FALLDELAY;
+  void setSpeed(int);
+  void doStep();
+  void showState (char);
+  QPixmap heroPm[20];
  private:
   QList<KGrEnemy> *enemies;
-  QPixmap heroPm[20];
+  // QPixmap heroPm[20];
   bool standOnEnemy();
   bool canWalkRight();
   bool canWalkLeft();
@@ -280,16 +413,20 @@ class KGrHero : public KGrFigure
   Direction nextDir;
   void collectNugget();
 
+  int mousex;
+  int mousey;
+  void setNextDir();
+
  public slots:
   void walkTimeDone();
   void fallTimeDone();
 
  signals:
-  void gotNugget();
+  void gotNugget(int);
   void haveAllNuggets();
   void leaveLevel();
   void caughtHero();
-  
+
 };
 
 #endif

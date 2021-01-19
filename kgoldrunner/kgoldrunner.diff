@@ -1,0 +1,49 @@
+--- kgrobj.cpp	Thu Feb 14 12:05:48 2002
++++ kgoldrunner/kgrobj.cpp	Tue Mar  5 16:23:42 2002
+@@ -24,7 +24,6 @@
+ KGrObj :: KGrObj (QWidget * parent, const char *name)
+   :QWidget (parent, name)
+ {
+-  painter.begin (this);
+   resize (16, 16);
+   setFixedSize (16, 16);
+   blocker = false;
+@@ -49,7 +48,9 @@ void KGrObj::eraseFigure (int x, int y)
+ 
+ void KGrObj::drawFigure (QPixmap f, int x, int y)
+ {
++  QPainter painter(this);
+   painter.drawPixmap (x, y, f);
++  painter.end();
+ }
+ 
+ void KGrObj::setx (int x)
+@@ -81,7 +82,6 @@ void KGrObj::showState (int i, int j)
+ 
+ KGrObj :: ~KGrObj ()
+ {
+-  painter.end ();
+ }
+ 
+ 
+@@ -119,8 +119,10 @@ void KGrEditable::paintEvent (QPaintEven
+     if (ev->rect().width() > 0)	// Use "ev": just to avoid compiler warnings.
+ 	;
+ 
++    QPainter painter(this);
+     painter.drawPixmap (0, 0, bgPixmap);
+     painter.flush();
++    painter.end();
+ }
+ 
+ KGrFree :: KGrFree (const QPixmap & pic1, const QPixmap & pic2, bool nug,
+--- kgrobj.h	Mon Feb 11 00:05:42 2002
++++ kgoldrunner/kgrobj.h	Tue Mar  5 16:23:42 2002
+@@ -138,7 +138,6 @@ class KGrObj : public QWidget
+   int xpos;
+   int ypos;
+   char iamA;
+-  QPainter painter;
+  private:
+   QCursor * m;
+ };

@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>The KGoldrunner User's Guide: The Game Editor</TITLE>
+<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="keywords" CONTENT="KGoldrunner">
+<META NAME="description" CONTENT="Documentation for KGoldrunner">
+</HEAD>
+
+<BODY BGCOLOR="#ffffff" LINK="#8E2727" VLINK="#8E2727" TEXT="#000000" > 
+<FONT FACE="Arial,Helvetica">
+<TABLE BORDER=0 CELLSPACING=2>
+<TR><TD><IMG SRC="kgoldrunner.png" BORDER="0" ALT="KGoldrunner" ALIGN="TEXTTOP">
+</TD><TD><H2>KGoldrunner - The Game Editor</H2></TD></TR>
+</TABLE>
+
+<TABLE WIDTH="600" CELLSPACING=0 CELLPADDING=0>
+<TR><TD>
+<P ALIGN="RIGHT">
+<A HREF="index.htm">HOME</A> |
+<B>Next</B> <A HREF="genhints.htm">General Hints</A> |
+<B>Previous</B> <A HREF="menu.htm">Menu Options</A>
+<HR WIDTH="600" SIZE=2 ALIGN="LEFT" NOSHADE>
+</P>
+<H3>Creating a Game</H3>
+Before you create a level, you must create a game in which to save it.  Use
+Create a Game on the Editor menu.  If you forget, you will be reminded.  The
+most important decisions to make when creating a game are to
+choose the rules you are going to follow (KGoldrunner or Traditional, see
+<A HREF="rules.htm">Scoring and Rules</A>) and to choose a unique 1-5
+character file name prefix for your game and levels.  You also need a
+name and description for your game, but those can easily be changed later.
+<P>
+The prefix is used internally by KGoldrunner to identify level files,
+high score files and saved games.  You can just use your initials as
+a prefix provided they are not the same as a KGoldrunner prefix.  So far,
+the prefixes "level", "plws", "wad", "plwv" and "tute" have ben used
+and "trad" and "chmp" are reserved for future use.
+<P>
+The four-letter "tute" prefix is reserved for tutorial games, which
+show the game description and hints on levels as they play.  If you
+compose an Advanced Tutorial game you would use the prefix "tutea",
+to make it run as a tutorial but not get its files confused with those
+of the basic Tutorial (which has prefix "tute").
+<H3>Creating a Level</H3>
+When you have a game set up, just use Create Level on the Editor menu
+to start creating a level.  It provides you with a blank playing area
+of 28x20 squares, with the hero at the top left.  You do not have to
+use the whole 28x20 area.  Lots of interesting levels use smaller areas.
+<P>
+The minimum requirement for a level to be playable is to have a hero,
+a gold nugget he can get to and a visible or hidden ladder leading
+to the top of the playing area.  You do not have to have enemies,
+bars or even bricks.  There are many challenging levels that have
+no enemies or no bricks.  The Tutorial game has some simple examples.
+<H3>Editing a Level</H3>
+Use Edit Any Level or Edit Next on the Editor menu to start editing a
+level.  If you choose a system level, you are warned that you will have
+to save it in one of your own games.  Otherwise, the default is to
+save the level back where it came from, but you can vary that.
+<H3>Painting Objects in a Level</H3>
+The picture below shows the menu bar and the edit toolbar, which appears
+when you first choose Create Level, Edit Any Level or Edit Next from the
+Editor menu and so change from Play to Edit mode.  It disappears when you
+go back to Play mode by using the Game menu to choose a level to play.
+<P>
+<CENTER><IMG SRC="editbar.png" BORDER="0" ALT="Edit Toolbar"></CENTER>
+<P>
+The three icons on the left of the edit toolbar have the same actions
+as menu options Create Level, Edit Any Level and Save Level.  The
+other ten icons are for painting objects in your level.
+<P>
+From left to right the ten icons are empty space (grey brick background),
+hero, enemy, brick (can dig), concrete (cannot dig), trap or false
+brick (can fall through), ladder, hidden ladder, pole or bar and
+gold nugget.  You click on an icon to make the mouse into a "brush"
+that paints that icon.  Initially the brush is set to "brick".
+<P>
+You paint by pointing and clicking the mouse to place a single object
+in a square <U>or</U> by clicking and dragging the mouse to fill a line
+or area, such as a long ladder, a large block of bricks or a concrete
+floor.  Painting stops wherever you release the mouse button.  If you
+make a mistake, you can use the "empty space" icon to erase.
+<p>
+Because there can be only one hero, that icon works differently.  When
+you paint with it, the hero moves from his previous position to wherever
+you release the mouse button.
+<P>
+<H3>Saving your Work</H3>
+When you have finished painting, save your work using the disk icon
+<U>or</U> Save Level in the Editor menu <U>or</U> Save Edits in the
+Game menu.  You must always save into your own games, never into the
+system games.
+<P>
+If you are creating a level, you use the Level Selection Dialog to
+assign it to a game and level number.  You use the same dialog if
+you have been editing a level, but the default is to save it where
+it came from.  You can change the game and level, to get a "Save
+as ..." effect.  If you have been editing a system level, that is OK,
+but you <U>must</U> save it as a copy in one of your own games.
+<H3>Adding a Level Name and Hint</H3>
+On the Save version of the Level Selection Dialog box is a button
+marked Level Name and Hint.  You can use this to put the finishing
+touches on your level by adding a name and hint.  Both are optional,
+but they are essential for tutorial levels and it is usual to provide
+them with very difficult levels (see the "Vengeance of Peter W" game).
+<H3>Testing a Level</H3>
+After saving an edited level, you can test it by using Play Any Level
+in the Game menu.  By default the game and level number are remembered
+and you can get straight into the level with just a few clicks.  If
+you then want to edit some more, the same is true when you use Edit Any
+Level again.
+<H3>Moving a Level</H3>
+You can use Move Level on the Editor menu to re-order or re-number the
+levels in a game or to move a level from one game to another.  Move Level
+is a two-part operation.  You must first load a level by selecting it for
+editing or play, then when you use Move Level, the Level Selection Dialog
+box appears and you can select the new level number and game (as
+required).
+<P>
+Moves are done in a way that leaves no gaps in the sequence of level
+numbers in a game.  For example, if you move level 10 of game A to
+level 3 of game B, levels 11 and above in game A are re-numbered
+<U>down</U> by one (to close the gap) and levels 3 and above in game
+B are re-numbered <U>up</U> by one (to make room for the newcomer).
+<H3>Deleting a Level</H3>
+You can use Delete Level on the Editor menu to get rid of an unwanted
+level.  As with Move Level, other levels are re-numbered to close the
+resulting gap in the sequence.
+<H3> Keyboard Short-Cuts</H3>
+You can use the keyboard in the Game Editor instead of the toolbar.  The
+keys set the object to be painted, just as clicking a toolbar button
+does.  The relevant key assignments are:
+<UL>
+<LI><B>Space</B> = Empty space (grey brick)</LI>
+<LI><B>R</B> = Hero</LI>
+<LI><B>E</B> = Enemy</LI>
+<LI><B>M</B> = Brick (can dig)</LI>
+<LI><B>X</B> = Concrete (cannot dig)</LI>
+<LI><B>F</B> = False brick or trap (can fall through)</LI>
+<LI><B>H</B> = Ladder</LI>
+<LI><B>Z</B> = Hidden ladder</LI>
+<LI><B>T</B> = Bar or pole</LI>
+<LI><B>N</B> = Gold nugget</LI>
+</UL>
+<P ALIGN="RIGHT">
+<HR WIDTH="100%" SIZE=3 ALIGN=CENTER NOSHADE>
+<A HREF="index.htm">HOME</A> |
+<B>Next</B> <A HREF="genhints.htm">General Hints</A> |
+<B>Previous</B> <A HREF="menu.htm">Menu Options</A>
+</P>
+</FONT>
+
+</TR></TD></TABLE>
+</BODY>
+</HTML>

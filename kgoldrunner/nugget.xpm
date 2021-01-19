@@ -1,5 +1,5 @@
 /* XPM */
-static char * cnugget_xpm[] = {
+static const char * nugget_xpm[] = {
 "16 16 14 1",
 " 	c None",
 ".	c #C05800",

@@ -23,9 +23,16 @@ contains results you don't want to keep, you may remove or edit it.
 called `autoconf'.  You only need `configure.in' if you want to change
 it or regenerate `configure' using a newer version of `autoconf'.
 
-The simplest way to compile this package is:
+The simplest way to compile, install and uninstall this package is:
 
-  1. `cd' to the directory containing the package's source code and type
+  0. Make sure you uncompress the correct release file for your system.
+     File "kgoldrunner-1.0-kde1.tgz" is for use with Qt 1.x library and
+     KDE 1.x desk top and "kgoldrunner-1.0-kde2.tgz" is for Qt 2.x
+     library and KDE 2.x desk top.  Also, make sure you are logged in
+     as "root", the superuser, if you want to do step 4 (install), or
+     use `su root'.
+
+  1. `cd' to the top directory containing the file "configure.in" and type
      `./configure' to configure the package for your system.  If you're
      using `csh' on an old version of System V, you might need to type
      `sh ./configure' instead to prevent `csh' from trying to execute
@@ -34,15 +41,21 @@ The simplest way to compile this package is:
      Running `configure' takes awhile.  While running, it prints some
      messages telling which features it is checking for.
 
-  2. Type `make' to compile the package.
+  2. Type `make init' to make some minor changes to the source code that
+     get around a problem with Qt's MOC pre-compiler.
 
-  3. Optionally, type `make check' to run any self-tests that come with
-     the package.
+  3. Type `make' to compile the package.
 
   4. Type `make install' to install the programs and any data files and
-     documentation.
+     documentation in the KDE desktop Games area (working as "root").
 
-  5. You can remove the program binaries and object files from the
+  5. Type `kgoldrunner' to start the game.  It will then check that all
+     the files it requires are in the right places and will report any
+     problems.  For further details on installation, see the online help
+     documentation section on"Installation" or see the README file if
+     installation has failed and you cannot run `kgoldrunner'.
+
+  6. You can remove the program binaries and object files from the
      source code directory by typing `make clean'.  To also remove the
      files that `configure' created (so you can compile the package for
      a different kind of computer), type `make distclean'.  There is
@@ -50,6 +63,8 @@ The simplest way to compile this package is:
      for the package's developers.  If you use it, you may have to get
      all sorts of other programs in order to regenerate files that came
      with the distribution.
+
+  7. To uninstall the package, type `make uninstall' (working as "root").
 
 Compilers and Options
 =====================

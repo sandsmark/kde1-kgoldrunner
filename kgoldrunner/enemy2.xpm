@@ -1,5 +1,5 @@
 /* XPM */
-static char * enemy2_xpm[] = {
+static const char * enemy2_xpm[] = {
 "320 16 7 1",
 " 	c None",
 ".	c #FFFF00",

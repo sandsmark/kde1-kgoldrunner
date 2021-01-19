@@ -1,0 +1,5 @@
+R                          ZN                          ZN                          ZN                          ZN                          ZN                          ZN                          ZN                          ZNNN   M                    ZMMMN  M                    ZMMMN  MNNNNNNNN  NN        ZMMMNN MHMMMMMMH  HM        ZMMMMHMMHMMMMMMH  H         ZMMMMH  HNNNNNMH  H TTTTNNNNZMMMMH  HMMMMHXH  H     XXXXXMMMMH       H HNNH         XMMMMH       H HXXH         XMMMMH       H    X         XMMMMHNNNNNNNH    X         XMMMMMMMMMMMMH    XXXXXXXXXXX
+Navigation
+This is an exercise in moving around.  Follow the track of gold nuggets until the ladder pops up at the right.  The hero can only follow the mouse along simple paths (like _ | L or U), so be careful not to get too far ahead of him.
+
+DANGER: Try not to fall off the ladder or bar into the concrete pit at the bottom right.  If you do get trapped there, the only way out is to kill the hero (press key "k") and start the level again.

@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>The KGoldrunner User's Guide: Installation</TITLE>
+<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="keywords" CONTENT="KGoldrunner">
+<META NAME="description" CONTENT="Documentation for KGoldrunner">
+</HEAD>
+
+<BODY BGCOLOR="#ffffff" LINK="#8E2727" VLINK="#8E2727" TEXT="#000000" > 
+<FONT FACE="Arial,Helvetica">
+<TABLE BORDER=0 CELLSPACING=2>
+<TR><TD><IMG SRC="kgoldrunner.png" BORDER="0" ALT="KGoldrunner" ALIGN="TEXTTOP">
+</TD><TD><H2>KGoldrunner - Installation</H2></TD></TR>
+</TABLE>
+
+<TABLE WIDTH="600" CELLSPACING=0 CELLPADDING=0>
+<TR><TD>
+<P ALIGN="RIGHT">
+<A HREF="index.htm">HOME</A> |
+<B>Next</B> <A HREF="tech.htm">Technical Details</A> |
+<B>Previous</B> <A HREF="genhints.htm">General Hints</A>
+<HR WIDTH="600" SIZE=2 ALIGN="LEFT" NOSHADE>
+</P>
+If you can read this, you have probably already installed KGoldrunner.  This
+section is to help you solve any problems you may have (e.g. with
+missing files) and to document how installation should go.
+<H3>Installation Steps</H3>
+First check whether you are installing into the KDE 1 or KDE 2 desktop
+(in KDE 2, the "Help, About KDE" menu option of many applications shows
+the KDE version).  Now log in as the super-user "root" (or use "su root")
+and set up a command-line window or Shell (e.g. "Konsole" or "Terminal").
+<P>
+Change to a suitable working directory and get the compressed
+KGoldrunner software for KDE 1 or KDE 2 into it (file "kgoldrunner-V-kdeN.tgz",
+where V is the KGoldrunner version number and N is 1 or 2).
+<P>
+Now enter the following commands:
+<OL>
+<LI>tar xvfz kgoldrunner-V-kdeN.tgz</LI>
+<LI>cd kgoldrunner-V-kdeN</LI>
+<LI>./configure</LI>
+<LI>make init</LI>
+<LI>make</LI>
+<LI>make install</LI>
+</OL>
+Commands 1 and 2 uncompress the software and change to a directory where
+you can run the other commands successfully.  Command 3 configures the
+software to fit your system's directory structure, operating system,
+compilers and other software (e.g. the Qt object and GUI library), then
+generates all the "Makefile"s you will need for the "make" commands.
+<P>
+Command 4 adjusts the source code to compile correctly with Qt 1 or
+Qt 2.  This step gets around a known problem with the Qt pre-processor
+(the Meta-Object Compiler or MOC).
+<P>
+Command 5 compiles all
+the source code and builds the "kgoldrunner" binary executable file
+and command 6 copies that file, the documentation, the games and levels,
+the icons and the KDE link file to their proper places in the KDE
+directory structures.
+<P>
+You should now be able to run "kgoldrunner" as a command, to verify the
+installation.  KGoldrunner does consistency checks when it starts and
+will report any serious problems.
+<H3>Menus and Desktop Icons</H3>
+In KDE 1, you can find KGoldrunner on the KDE Games menu after
+installation.  You may have to log out and in again to get it to
+appear.
+<P>
+In KDE 2, you use the KDE "System, Menu Editor" menu option to
+put KGoldrunner on the Games menu.  You should find the KGoldrunner icon
+(a green figure and a bag of gold) in the list of available icons.
+<P>
+In KDE 1, the KGoldrunner icon appears on the desktop if you have a
+copy of the file "KGoldrunner.kdelnk" in sub-directory "Desktop" of
+your home directory.  You may have to log out and in again to get it
+to appear.  In KDE 2, you need the file "KGoldrunner.desktop" in
+sub-directory "KDesktop".  It is not clear how you use KDE to get the
+file there, so just copy it from where it gets installed (i.e.
+"/opt/kde/applnk/Games" or "/opt/kde2/applnk/Games").  To remove
+the icon, right-click on it and use the popup menu.
+<P>
+You can get the KGoldrunner icon onto the "panel" at the bottom of
+the screen just by using the mouse to drag a copy there from the
+desktop.  Alternatively, you can use the facilities on the KDE menu
+to add the icon to the panel.  To remove the icon, right-click on it
+and use the popup menu.
+<H3>Components of KGoldrunner</H3>
+KGoldrunner has the following groups of components:
+<UL>
+<LI>Source files in C++ (*.cpp and *.h),</LI>
+<LI>Image files for Play and Edit modes, in XPM format (*.xpm),</LI>
+<LI>"Makefile"s used to compile, build and install KGoldrunner,</LI>
+<LI>Configuration files (config* and others),</LI>
+<LI>The KGoldrunner executable (kgoldrunner), desktop-link and icon files,
+<LI>Data files to define games and store high scores (*.dat),</LI>
+<LI>Level files (*.grl) in subdirectory "levels" to store levels of games,</LI>
+<LI>This documentation's HTML-text and image files (*.htm and *.png),</LI>
+<LI>Package documentation files (e.g. README).</LI>
+</UL>
+The first four groups will be used only if you are compiling and building
+from source files.  The last five groups are typically what will be
+installed as a "package" from a Linux distribution (e.g. from a SuSE Linux
+distribution using YaST).
+<H3>Flavours of KGoldrunner</H3>
+KGoldrunner has been based on the KDE desktop and the Qt object
+library.  Both of these changed substantially between their respective
+versions 1 and 2.
+<P>
+There are thus two flavours of the KGoldrunner
+executable file (kgoldrunner), one based on KDE1/Qt1 and the other based
+on KDE2/Qt2, using completely different object code libraries and having
+differently compiled source code.  The KDE1/Qt1 flavour will not work
+in a KDE2/Qt2 environment and vice versa.
+<P>
+There are also two flavours of the desktop-link file, which links the icon
+images to your desktop, the games menu and the KGoldrunner executable.  The
+desktop-link files will not work in the wrong environment either.
+<H3>Where Files are Installed</H3>
+Apart from the executable and the desktop-link files, all files are the
+same in the KDE1/Qt1 and KDE2/Qt2 environments, but they go in different
+places.  The base directories used for installing packages are different
+in KDE 1 and KDE 2 and the data and levels sub-directories KGoldrunner uses
+are different too.
+<P>
+The base directory for KDE 1 applications is "/opt/kde" and for KDE 2 it
+is "/opt/kde2".  Below that, they have similar sub-directories, as follows:
+<UL>
+<LI><B>bin</B> - Contains the KGoldrunner executable file (kgoldrunner).</LI>
+<LI><B>share</B> - This is the base for other sub-directories.</LI>
+<LI><B>share/applnk/Games</B> - Contains the KGoldrunner desktop-link
+file ("kgoldrunner.kdelnk" for KDE 1 or "kgoldrunner.desktop" for KDE 2).</LI>
+<LI><B>share/icons/kgoldrunner.xpm</B> - Contains the large (desktop) icon
+for KGoldrunner in KDE 1.</LI>
+<LI><B>share/icons/mini/kgoldrunner.xpm</B> - Contains the small (menu) icon
+for KGoldrunner in KDE 1.</LI>
+<LI><B>share/icons/locolor/32x32/apps/kgoldrunner.xpm</B> - Contains the large
+(desktop) icon for KGoldrunner in KDE 2.</LI>
+<LI><B>share/icons/locolor/16x16/apps/kgoldrunner.xpm</B> - Contains the small
+(menu) icon for KGoldrunner in KDE 2.</LI>
+<LI><B>share/apps/kgoldrun</B> - Contains the games data files
+for KGoldrunner in KDE 1.</LI>
+<LI><B>share/apps/kgoldrun/levels</B> - Contains the game levels files
+for KGoldrunner in KDE 1.</LI>
+<LI><B>share/apps/kgoldrun/system</B> - Contains the games data files
+for KGoldrunner in KDE 2.</LI>
+<LI><B>share/apps/kgoldrun/system/levels</B> - Contains the game levels
+files for KGoldrunner in KDE 2.</LI>
+<LI><B>share/doc/HTML/default/kgoldrunner</B> - Contains the default-language
+(English) documentation and graphics files for KGoldrunner in KDE 1.</LI>
+<LI><B>share/doc/HTML/en/kgoldrun</B> - Contains the
+English documentation and graphics files for KGoldrunner in KDE 2.</LI>
+</UL>
+<H3>Working on KGoldrunner as a Developer</H3>
+If you would like to work on the source code as a developer, please contact
+the authors first, to make sure you have the latest versions (email
+addresses are in the "Help, About KGoldrunner" menu option message).  Also,
+have a look at the <A HREF="tech.htm">Technical Details</A> section of
+this document.
+<P ALIGN="RIGHT">
+<HR WIDTH="100%" SIZE=3 ALIGN=CENTER NOSHADE>
+<A HREF="index.htm">HOME</A> |
+<B>Next</B> <A HREF="tech.htm">Technical Details</A> |
+<B>Previous</B> <A HREF="genhints.htm">General Hints</A>
+</P>
+</FONT>
+
+</TR></TD></TABLE>
+</BODY>
+</HTML>

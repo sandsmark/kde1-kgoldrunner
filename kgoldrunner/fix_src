@@ -1,0 +1,56 @@
+#***************************************************************************
+#                          fix_src  -  description
+#                            -------------------
+#   begin                : Sun Jan 27 2002
+#   copyright            : (C) 2002 by Marco Krüger and Ian Wadham
+#   email                : See menu "Help, About KGoldrunner"
+#***************************************************************************/
+#
+#***************************************************************************
+#                                                                          *
+#    This program is free software; you can redistribute it and/or modify  *
+#    it under the terms of the GNU General Public License as published by  *
+#    the Free Software Foundation; either version 2 of the License, or     *
+#    (at your option) any later version.                                   *
+#                                                                          *
+#***************************************************************************/
+#
+#   This script edits the KGoldrunner source code, making it into either the
+#   KDE1/Qt1 or KDE2/Qt2 variant, depending on the KDevelop project VERSION
+#   string in parameter $1.  If the code is already correct, this script has
+#   no effect.  The edits are to comment out certain lines of Qt1-only code
+#   if you are building with Qt2 and vice versa.  This is necessary because
+#   Qt's MOC compiler, which pre-processes definitions of slots and signals,
+#   cannot process the C++ pre-processor directives #ifdef, #else and #endif.
+
+case "$1" in
+*kde1)	v=1;;
+*kde2)	v=2;;
+*)	v=0;;
+esac
+
+if [ "$v" = "0" ]
+then
+    echo "The KGoldrunner project VERSION string, as set by KDevelop, must"
+    echo "end with 'kde1' or 'kde2'.  The string supplied was '$1'."
+    exit 1
+fi
+
+for file in *.h *.cpp
+do
+    if [ "$v" = "1" ]
+    then
+	# KDE1/Qt1 Version.  Make sure Qt1-only lines are uncommented and
+	# Qt2plus-only lines become comments (if not already commented).
+	sed -e '/QT1_ONLY/s.^//..
+		/^[^/][^/].*QT2PLUS_ONLY/s.^.//.' $file >$file.tmp
+	mv $file.tmp $file
+    else
+	# KDE1/Qt2 Version.  Make sure Qt2plus-only lines are uncommented
+	# and Qt1-only lines become comments (if not already commented).
+	sed -e '/QT2PLUS_ONLY/s.^//..
+		/^[^/][^/].*QT1_ONLY/s.^.//.' $file >$file.tmp
+	mv $file.tmp $file
+    fi
+done
+exit

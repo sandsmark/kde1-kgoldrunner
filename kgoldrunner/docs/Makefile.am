@@ -1,2 +1,5 @@
-# Add all the lanuages you have documentation for
-SUBDIRS = en
+####### kdevelop will overwrite this part!!! (begin)##########
+
+SUBDIRS = en 
+
+####### kdevelop will overwrite this part!!! (end)############
