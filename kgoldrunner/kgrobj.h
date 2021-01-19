@@ -36,7 +36,7 @@
 #include <kiconloader.h>
 #endif
 
-#include <iostream.h>
+#include <iostream>
 
 #include <qimage.h>
 #include <qlist.h>

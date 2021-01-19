@@ -27,7 +27,7 @@
 #include "kgoldrunner.moc"
 #include "kgoldrunnerwidget.h"
 
-#include <iostream.h>
+#include <iostream>
 #include <stdlib.h>
 
 // ICON FILES
