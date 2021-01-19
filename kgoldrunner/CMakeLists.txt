@@ -47,3 +47,5 @@ install(FILES
 
     DESTINATION ${KDE1_HTMLDIR}/en/kgoldrunner
 )
+
+add_subdirectory(system)
