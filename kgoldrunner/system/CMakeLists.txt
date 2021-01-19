@@ -11,6 +11,6 @@ install(FILES
 install(DIRECTORY
     levels/
 
-    DESTINATION ${KDE2_DATADIR}/kgoldrun/system
+    DESTINATION ${KDE1_DATADIR}/kgoldrun
 )
 
