@@ -5,7 +5,7 @@ install(FILES
     hi_plwv.dat
     hi_wad.dat
 
-    DESTINATION "${KDE1_DATADIR}"/kgoldrun/
+    DESTINATION ${KDE1_DATADIR}/kgoldrun/
 )
 
 install(DIRECTORY
