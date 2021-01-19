@@ -1,0 +1,16 @@
+Begin3
+Title:          KGoldrunner 
+Version:        0.2.0
+Entered-date:   2.4.00
+Description:    a Loderunner-clone for KDE   	
+Keywords:       KDE Qt
+Author:         Marco Krüger <grisu@cs.tu-berlin.de>
+Maintained-by:  Marco Krüger <grisu@cs.tu-berlin.de>
+Home-page:      http://www.cs.tu-berlin.de/~grisu/kgoldrunner
+Alternate-site: 
+Primary-site:   ftp://ftp.kde.org/pub/kde/unstable/apps/games
+                xxxxxx  kgoldrunner-0.2.tar.gz
+                xxx     kgoldrunner-0.2.lsm
+Platform:       Linux. Needs Qt and KDE
+Copying-policy: GPL
+End

@@ -1,0 +1,10 @@
+# KDE Config File 
+[KDE Desktop Entry]
+Name=KGoldrunner
+Exec=kgoldrunner
+Icon=kgoldrunner.xpm
+Type=Application
+DocPath=kgoldrunner/index.html
+Comment=
+Terminal=0
+MiniIcon=kgoldrunner.xpm
